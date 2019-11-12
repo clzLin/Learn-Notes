@@ -190,6 +190,138 @@ $ ./test.sh 1 2 3
 3
 ```
 
+## 7.Shell基本运算符 ##
+### 7.1算术运算符 ###
+```
+原生bash不支持简单的数学运算，可以用命令awk或expr实现
+val=`expr 2 + 2`
+# expr和数字之间必须要有空格，数字和运算符之间也必须要有空格
+
+val=`expr 20 - 10`
+val=`expr 20 \* 10`
+val=`expr 20 / 10`
+val=`expr $a % $b`
+if [ $a == $b ]
+then
+  echo "a变量等于b变量"
+fi
+if [ $a != $b ]
+then
+  echo "a不等于b"
+fi
+
+#注意空格的位置
+```
+
+### 7.2关系运算符 ###
+关系运算符只支持数字，不支持字符串，除非字符串的值是数字。
+```
+a=10
+b=20
+1. -eq 相等返回true                
+[ $a -eq $b ] 返回 false。
+
+2. -ne 不相等返回true              
+[ $a -ne $b ] 返回 true。
+
+3. -gt 左边的数大于右边 返回true     
+[ $a -gt $b ] 返回 false。
+
+4. -lt 左边的数小于右边 返回true     
+[ $a -lt $b ] 返回 true。
+
+5. -ge 左边的数大于等于右边 返回true  
+[ $a -ge $b ] 返回 false。
+
+6. -le 左边的数小于等于右边 返回true  
+[ $a -le $b ] 返回 true。
+
+# 注意空格位置
+```
+
+### 7.3布尔运算符 ###
+```
+a=10
+b=20
+! 非运算  [ $a != $b ]                返回true
+-o 或运算 [ $a -lt 20 -o $b -gt 100 ] 返回 true。
+-a 与运算 [ $a -lt 20 -a $b -gt 100 ] 返回 false。
+```
+
+### 7.4逻辑运算符 ###
+```
+&& 逻辑的 AND [[ $a -lt 100 && $b -gt 100 ]] 返回 false
+|| 逻辑的 OR  [[ $a -lt 100 || $b -gt 100 ]] 返回 true
+
+逻辑运算符的&& 和 || 和布尔运算符的 -o -a一个意思。
+```
+
+### 7.5字符串运算符 ###
+```
+a="abc"
+b="efg"
+=  检测两个字符串相等返回true    [ $a = $b ]  返回 false
+!= 检测两个字符串不相等返回true  [ $a != $b ] 返回 true
+-z 检测字符串长度为0返回true     [ -z $a ]    返回 false
+-n 检测字符串长度不为0返回true   [ -n "$a" ]  返回 true
+$  检测字符串不为空返回 true     [ $a ]       返回 true
+
+```
+
+### 7.6文件测试运算符 ###
+文件测试运算符用于检测 Unix 文件的各种属性。
+```
+-b file 检测文件是否是块设备文件[ -b file ]
+-c file 检测文件是否是字符设备文件
+-d file 检测文件是否是目录
+-f file 检测文件是否是普通文件（既不是目录，也不是设备文件）
+-g file 检测文件是否设置了 SGID 位
+-k file 检测文件是否设置了粘着位(Sticky Bit)
+-p file 检测文件是否是有名管道
+-u file 检测文件是否设置了SUID位
+-r file 检测文件是否可读
+-w file 检测文件是否可写
+-x file 检测文件是否可执行	
+-s file 检测文件是否不为空（文件大小是否大于0）
+-e file 检测文件（包括目录）是否存在
+-S file 判断某文件是否 socket
+-L file 检测文件是否存在并且是一个符号链接
+```
+
+**使用运算符都要注空格的位置.**
 
 
 
+## 8.echo命令 ##
+### 8.1显示换行 ###
+```
+echo -e "OK! \n"
+echo "It is a test"
+
+输出：
+OK!
+
+It is a test
+```
+
+### 8.2显示不换行 ###
+```
+echo -e "OK! \c" # -e 开启转义 \c 不换行
+echo "It is a test"
+
+输出：
+OK! It is a test
+```
+
+### 8.3显示结果定向至文件 ###
+```
+echo "It is a test" > myfile
+```
+
+### 8.4显示命令执行结果 ###
+```
+echo `date`
+
+输出：
+Thu Jul 24 10:08:46 CST 2014
+```
