@@ -358,3 +358,7 @@ foo.elc : foo.el
 $(filter %.o,$(files))表示调用Makefile的filter函数，过滤“$files”集，只要其中模式 
 为“%.o”的内容。这个例子展示了Makefile中更大的弹性。
 ```
+
+
+
+
